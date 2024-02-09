@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:http/http.dart' as http;
 
 void main() {
   runApp(const MyApp());
+  
 }
 
 class MyApp extends StatelessWidget {
@@ -33,30 +35,31 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   late Timer _timer;
   int _timerHours = 0;
-  int _timerMinutes = 0;
-  int _timerSeconds = 3;
+  int _timerMinutes = 30;
+  int _timerSeconds = 0;
   bool _timerActive = false;
   String _demleButtonText = 'DEMLE';
   var _demlenmestatus = 0;
   bool _timershow = false;
   Color _background = Color.fromARGB(255, 255, 255, 255);
   String _demlendiTarihSaat = '';
-  String _secondGifUrl = 'https://cdn.radar.istanbul/699edf41-c497-4577-8eeb-74773da93f73.gif';
+  String _secondGifUrl = 'https://cdn.radar.istanbul/626ae7db-ebb9-4dae-b561-43dcc476d46d.gif';
   bool _secondGifVisible = false;
 
   Color _BackgroundColor() {
     if (_demlenmestatus == 0) {
-      return Color.fromARGB(255, 131, 161, 126);
+      return Color.fromARGB(255, 202, 175, 126);
     } else if (_demlenmestatus == 1) {
-      return Color.fromARGB(255, 142, 187, 134);
+      return Color.fromARGB(255, 190, 142, 53);
     } else if (_demlenmestatus == 2) {
       return Color.fromARGB(255, 82, 146, 71);
     } else if (_demlenmestatus == 3) {
-      return Color.fromARGB(255, 24, 1, 1);
+      return Color.fromARGB(255, 31, 2, 2);
     } else {
       return Color.fromARGB(255, 28, 247, 76);
     }
   }
+  
 
   void _BayatUyari() {
     showDialog(
@@ -70,8 +73,8 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 Navigator.of(context).pop();
                 _timerHours = 0;
-                _timerMinutes = 0;
-                _timerSeconds = 3;
+                _timerMinutes = 30;
+                _timerSeconds = 0;
                 _timerActive = true;
                 _demlenmestatus = 1;
                 _timershow = true;
@@ -101,9 +104,9 @@ class _MyHomePageState extends State<MyHomePage> {
         _demlenmestatus = 2;
         _timer.cancel();
         _timerActive = false;
-        _timerHours = 0;
+        _timerHours = 3;
         _timerMinutes = 0;
-        _timerSeconds = 3;
+        _timerSeconds = 0;
         _timershow = true;
         _demleButtonText = 'TAZE';
         _background = Color.fromARGB(255, 255, 255, 255);
@@ -169,11 +172,17 @@ class _MyHomePageState extends State<MyHomePage> {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
 
-    double topPercentage = -5;
-    double leftPercentage = 14;
+    double topPercentage = -20;
+    double leftPercentage = 7;
+    
+    double topPercentage2 = -7;
+    double leftPercentage2 = 21;
 
     double topPosition = (topPercentage / 100) * screenHeight;
     double leftPosition = (leftPercentage / 100) * screenWidth;
+
+    double topPosition2 = (topPercentage2 / 100) * screenHeight;
+    double leftPosition2 = (leftPercentage2 / 100) * screenWidth;
 
     const double spaceBetweenGifAndButton = 50;
 
@@ -201,9 +210,9 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Visibility(
               visible: _timerActive && _demlenmestatus == 1,
               child: CachedNetworkImage(
-                imageUrl: 'https://cdn.radar.istanbul/0c916e63-b765-4186-b41e-680b371328cd.gif',
-                width: screenWidth * 0.66,
-                height: screenHeight * 0.5,
+                imageUrl: 'https://cdn.radar.istanbul/b05b4c37-c551-4852-9efd-a00de23b3e3e.gif',
+                width: screenWidth * 0.85,
+                height: screenHeight * 0.65,
                 placeholder: (context, url) => CircularProgressIndicator(),
                 errorWidget: (context, url, error) => Icon(Icons.error),
               ),
@@ -211,14 +220,14 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
 
           Positioned(
-            top: 10,
-            left: 130,
+            top: topPosition2,
+            left: leftPosition2,
             child: Visibility(
               visible: _secondGifVisible,
               child: CachedNetworkImage(
                 imageUrl: _secondGifUrl,
-                width: screenWidth * 0.37,
-                height: screenHeight * 0.27,
+                width: screenWidth * 0.6,
+                height: screenHeight * 0.35,
                 placeholder: (context, url) => CircularProgressIndicator(),
                 errorWidget: (context, url, error) => Icon(Icons.error),
               ),
